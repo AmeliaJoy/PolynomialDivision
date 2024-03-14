@@ -7,22 +7,25 @@
 #include <vector>
 class Polynomial
 {
-    public:
+    private:
         std::vector<Term> terms;
+        Polynomial* add(const Term &toAdd);
+        void sort();
+        void clearEmpty(); 
+    public:
         Polynomial(std::string polynomial);
         Polynomial();
         Polynomial(std::vector<Term> terms);
-        Polynomial operator + (const Polynomial &toAdd);
-        Polynomial* add(Term toAdd);
-        Polynomial operator - (Polynomial toSubtract);
-        Polynomial operator - (Term toSubtract);
-        void sort();  
-        void clearEmpty(); 
-        bool isPopulated();
-        Polynomial operator * (Term toMultiply);
-        static void print(Polynomial poly);
-        //Polynomial operator + (Term toAdd);
-        Polynomial operator / (Polynomial divisor);
+        Polynomial operator + (const Polynomial &toAdd) const;
+        
+        Polynomial operator - (const Polynomial& toSubtract) const;
+        Polynomial operator - (Term toSubtract) const;
+        Polynomial operator * (const Term & toMultiply) const;
+        
+        bool isPopulated() const;
+        static void print(const Polynomial& poly);
+        Polynomial operator + (const Term& toAdd) const;
+        Polynomial operator / (const Polynomial& divisor) const;
 };
 #endif
 

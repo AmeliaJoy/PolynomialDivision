@@ -10,14 +10,14 @@ void Term::set(double coefficient, int power)
     this->coefficient = coefficient;
     this->power = power;
 }
-Term Term::operator/(Term divisorTerm)
+Term Term::operator/(const Term& divisorTerm) const
 {
     Term quotient;
     quotient.coefficient = this->coefficient / divisorTerm.coefficient;
     quotient.power = this->power - divisorTerm.power;
     return quotient;
 }
-Term Term::operator * (Term toMultiply)
+Term Term::operator * (const Term& toMultiply) const
 {
     Term product;
     product.coefficient = this ->coefficient * toMultiply.coefficient;
@@ -77,4 +77,7 @@ void Term::print(Term term)
 {
     std::cout<<term.coefficient<<"x^"<<term.power << std::endl;
     
+}
+int Term::getPower (){
+    return power;
 }

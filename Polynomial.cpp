@@ -2,13 +2,13 @@
 
 bool compare(Term a, Term b)
 {
-    return a.power > b.power;
+    return a.getPower() > b.getPower();
 }
 void Polynomial::sort()
 {
     std::sort(terms.begin(),terms.end(),compare);
 }
-bool Polynomial::isPopulated()
+bool Polynomial::isPopulated() const
 {
     return terms.size() != 0;
 }
@@ -22,7 +22,7 @@ void Polynomial::clearEmpty()
         }
     }
 }
-Polynomial Polynomial::operator / (Polynomial divisor)
+Polynomial Polynomial::operator / (const Polynomial &divisor) const
 {
     Polynomial workingDividend(*this);
     Polynomial workingDivisor(divisor);
@@ -37,7 +37,7 @@ Polynomial Polynomial::operator / (Polynomial divisor)
     }
     return quotient;
 }
-Polynomial Polynomial::operator - (Polynomial toSubtract)
+Polynomial Polynomial::operator - (const Polynomial &toSubtract) const
 {
     Polynomial difference(*this);
     for(int i = 0; i < toSubtract.terms.size();i++)
@@ -48,7 +48,7 @@ Polynomial Polynomial::operator - (Polynomial toSubtract)
     difference.sort();
     return difference;
 }
-Polynomial Polynomial::operator - (Term toSubtract)
+Polynomial Polynomial::operator - ( Term toSubtract) const
 {
     Polynomial difference(*this);
     for(int i = 0; i < difference.terms.size(); i++)
@@ -64,7 +64,7 @@ Polynomial Polynomial::operator - (Term toSubtract)
     
     return difference;
 }
-Polynomial Polynomial::operator * (Term toMultiply)
+Polynomial Polynomial::operator * (const Term &toMultiply) const
 {
     Polynomial product(*this);
     for(int i = 0; i < product.terms.size(); i++)
@@ -73,8 +73,7 @@ Polynomial Polynomial::operator * (Term toMultiply)
     }
     return product;
 }
-
-Polynomial Polynomial::operator + (const Polynomial &toAdd)
+Polynomial Polynomial::operator + (const Polynomial &toAdd) const
 {
     Polynomial sum(*this);
     for(int i = 0; i < toAdd.terms.size();i++)
@@ -85,7 +84,15 @@ Polynomial Polynomial::operator + (const Polynomial &toAdd)
     sum.sort();
     return sum;
 }
-Polynomial* Polynomial::add(Term toAdd)
+Polynomial Polynomial::operator + (const Term &toAdd) const
+{
+    Polynomial sum(*this);
+    sum.add(toAdd);
+    sum.clearEmpty();
+    sum.sort();
+    return sum;
+}
+Polynomial* Polynomial::add(const Term& toAdd)
 {
     for(int i = 0; i < terms.size(); i++)
     {
@@ -120,9 +127,7 @@ Polynomial::Polynomial(std::vector<Term> newTerms)
 Polynomial::Polynomial()
 { 
 }
-
-
- void Polynomial::print(Polynomial poly)
+void Polynomial::print(const Polynomial &poly)
 {
     if(poly.terms.size() == 0)
         return;

@@ -21,11 +21,12 @@ class Polynomial
         Polynomial operator - (const Polynomial& toSubtract) const;
         Polynomial operator - (Term toSubtract) const;
         Polynomial operator * (const Term & toMultiply) const;
-        
+        Polynomial operator * (const Polynomial & toMultiply) const;
         bool isPopulated() const;
         static void print(const Polynomial& poly);
         Polynomial operator + (const Term& toAdd) const;
         Polynomial operator / (const Polynomial& divisor) const;
+        Polynomial operator % (const Polynomial& divisor) const;
 };
 #endif
 

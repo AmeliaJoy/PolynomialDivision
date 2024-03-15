@@ -37,6 +37,19 @@ Polynomial Polynomial::operator / (const Polynomial &divisor) const
     }
     return quotient;
 }
+Polynomial Polynomial::operator % (const Polynomial &divisor) const
+{
+    Polynomial remainder(*this);
+    Polynomial workingDivisor(divisor);
+    Term factor(0,0);
+    while(remainder.isPopulated() && workingDivisor.isPopulated() && remainder.terms.at(0).power >= divisor.terms.at(0).power)
+    {
+        factor = remainder.terms.at(0) / divisor.terms.at(0);
+        workingDivisor = divisor * factor;
+        remainder = remainder - workingDivisor;
+    }
+    return remainder;
+}
 Polynomial Polynomial::operator - (const Polynomial &toSubtract) const
 {
     Polynomial difference(*this);
@@ -70,6 +83,15 @@ Polynomial Polynomial::operator * (const Term &toMultiply) const
     for(int i = 0; i < product.terms.size(); i++)
     {
         product.terms.at(i) = product.terms.at(i) * toMultiply;
+    }
+    return product;
+}
+Polynomial Polynomial::operator * (const Polynomial &toMultiply) const
+{
+    Polynomial product;
+    for(int i = 0; i < toMultiply.terms.size();i++)
+    {
+        product =  product + (*this * toMultiply.terms.at(i));
     }
     return product;
 }
